@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -22,15 +23,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SearchNewsFragment: Fragment(R.layout.fragment_search_news) {
-    lateinit var viewModel: NewViewModel
+    private val viewModel: NewViewModel by sharedViewModel()
     private lateinit var searchAdapter: NewsAdapter
     private lateinit var binding: FragmentSearchNewsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
         initRecycleView()
 
         var job: Job? = null
@@ -73,7 +74,6 @@ class SearchNewsFragment: Fragment(R.layout.fragment_search_news) {
         searchAdapter.setOnItemClickListener {
             Log.d("hunter_test","article = " + Gson().toJson(it).toString())
             val bundle = Bundle().apply {
-                putString("url", it.url)
                 putSerializable("article", it)
             }
             findNavController().navigate(

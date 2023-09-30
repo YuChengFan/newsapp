@@ -6,7 +6,7 @@ import java.io.Serializable
 
 //tells android this is a table in our class
 @Entity(
-    tableName = "articles"
+    tableName = "articles",
 )
 
 data class Article(

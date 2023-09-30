@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -16,9 +17,10 @@ import com.androiddevs.mvvmnewsapp.databinding.FragmentSavedNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewViewModel
 import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
-    lateinit var viewModel: NewViewModel
+    private val viewModel: NewViewModel by sharedViewModel()
     private lateinit var binding: FragmentSavedNewsBinding
     private lateinit var newsAdapter: NewsAdapter
 
@@ -33,7 +35,6 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
         initRecycleView()
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
@@ -80,7 +81,6 @@ class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("article", it)
-                putString("url", it.url)
             }
             findNavController().navigate(
                 R.id.action_savedNewsFragment_to_articleFragment,

@@ -28,7 +28,6 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: NewsAdapter.ViewHolder, position: Int) {
         val article = differ.currentList[position]
-        Log.d("hunter_test","")
 //        Glide.with(holder.itemView).load(article.urlToImage).into(holder.ivArticleImage)
         ImageLoaderFactory.getInstance().loadImage(article.urlToImage, holder.ivArticleImage)
         holder.tvSource.text = article.source.name
@@ -51,6 +50,10 @@ class NewsAdapter: RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 //        fun onItemClicked(invitation: com.machipopo.media17.adapter.StreamerInvitationAdapter.StreamerInvitation?)
 //        fun test2()
 //    }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
 
     override fun getItemCount(): Int {
         return differ.currentList.size

@@ -39,9 +39,6 @@
         android:name="com.androiddevs.mvvmnewsapp.ui.fragment.ArticleFragment"
         android:label="ArticleFragment" >
         <argument
-            android:name="url"
-            app:argType="string" />
-        <argument
             android:name="article"
             app:argType="com.androiddevs.mvvmnewsapp.model.Article" />
     </fragment>

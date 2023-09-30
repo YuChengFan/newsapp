@@ -1,35 +1,28 @@
 package com.androiddevs.mvvmnewsapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import android.util.Log
+import android.view.LayoutInflater
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.databinding.ActivityNewsBinding
-import com.androiddevs.mvvmnewsapp.db.ArticleDatabase
-import com.androiddevs.mvvmnewsapp.repository.NewsRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewsActivity : AppCompatActivity() {
+class NewsActivity() : BaseBindingActivity<ActivityNewsBinding>() {
 
-    lateinit var viewModel: NewViewModel
+    val viewModel: NewViewModel? by viewModel()
 
-    private lateinit var binding: ActivityNewsBinding
-
+    override val bindingInflater: (LayoutInflater) -> ActivityNewsBinding = ActivityNewsBinding::inflate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_news)
-
-        val repository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewViewModel::class.java)
-
-        binding = ActivityNewsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsHostFragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
+
+        val handler = CoroutineExceptionHandler{_, throwable->
+            Log.d("hunter_test","caught exception: $throwable")
+        }
     }
 }

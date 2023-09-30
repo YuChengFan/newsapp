@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,24 +13,23 @@ import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapter.NewsAdapter
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewViewModel
-import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.androiddevs.mvvmnewsapp.util.Constants
 import com.androiddevs.mvvmnewsapp.util.Resource
-import com.google.gson.Gson
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
+class BreakingNewsFragment: BaseBindingFragment<FragmentBreakingNewsBinding>() {
 
-    lateinit var viewModel: NewViewModel
+    private val viewModel: NewViewModel by sharedViewModel()
     lateinit var newsAdapter: NewsAdapter
-    private lateinit var binding: FragmentBreakingNewsBinding
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBreakingNewsBinding = FragmentBreakingNewsBinding::inflate
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentBreakingNewsBinding.inflate(layoutInflater, container, false)
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     var isLoading = false
@@ -69,7 +67,6 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
         initRecycleView()
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { newsResponse ->
@@ -95,13 +92,10 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
 
     private fun initRecycleView(){
         newsAdapter = NewsAdapter()
-        binding.rvBreakingNews.apply {
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+        binding?.rvBreakingNews?.adapter = newsAdapter
+        binding?.rvBreakingNews?.layoutManager = LinearLayoutManager(activity)
         newsAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putString("url", it.url)
                 putSerializable("article", it)
             }
             findNavController().navigate(
@@ -109,11 +103,11 @@ class BreakingNewsFragment: Fragment(R.layout.fragment_breaking_news) {
                 bundle
             )
         }
-        binding.rvBreakingNews.addOnScrollListener(this@BreakingNewsFragment.scrollListener)
+        binding?.rvBreakingNews?.addOnScrollListener(this@BreakingNewsFragment.scrollListener)
     }
 
     private fun updateProgressBar(isShow: Boolean){
-        binding.paginationProgressBar.visibility = if (isShow) View.VISIBLE else View.GONE
+        binding?.paginationProgressBar?.visibility = if (isShow) View.VISIBLE else View.GONE
         isLoading = isShow
     }
 }

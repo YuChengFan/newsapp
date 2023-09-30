@@ -9,6 +9,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.androiddevs.mvvmnewsapp.R
@@ -16,9 +17,10 @@ import com.androiddevs.mvvmnewsapp.databinding.FragmentArticleBinding
 import com.androiddevs.mvvmnewsapp.ui.NewViewModel
 import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ArticleFragment: Fragment(R.layout.fragment_search_news) {
-    lateinit var viewModel: NewViewModel
+    private val viewModel: NewViewModel by sharedViewModel()
     lateinit var binding: FragmentArticleBinding
     val args: ArticleFragmentArgs by navArgs()
 
@@ -33,8 +35,6 @@ class ArticleFragment: Fragment(R.layout.fragment_search_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as NewsActivity).viewModel
-        val url = args.url
         val article = args.article
         binding.webView.apply {
             webViewClient = object : WebViewClient(){
