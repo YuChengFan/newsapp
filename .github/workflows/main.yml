@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
         with:
           name: lint.html
           path: app/build/reports/lint-results-debug.html
+
 
 #  unit-test:
 #    needs: [lint]
