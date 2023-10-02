@@ -94,5 +94,18 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          name: expense-manager.apk
+          name: app-debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+
+  upload-to-firebase:
+    needs: [package]
+    runs-on: ubuntu-latest
+    steps:
+        - name: upload artifact to Firebase App Distribution
+          uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+          with:
+              appId: ${{secrets.FIREBASE_APP_ID}}
+              token: ${{secrets.FIREBASE_TOKEN}}
+              groups: testers
+              file: app/build/outputs/apk/debug/app-debug.apk
+
