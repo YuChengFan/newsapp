@@ -73,12 +73,16 @@ class SearchNewsFragment: Fragment(R.layout.fragment_search_news) {
         }
         searchAdapter.setOnItemClickListener {
             Log.d("hunter_test","article = " + Gson().toJson(it).toString())
-            val bundle = Bundle().apply {
-                putSerializable("article", it)
-            }
+//            val bundle = Bundle().apply {
+//                putSerializable("article", it)
+//            }
+//            findNavController().navigate(
+//                R.id.action_searchNewsFragment_to_articleFragment,
+//                bundle
+//            )
+            viewModel.currentArticle = it
             findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
-                bundle
+                R.id.action_searchNewsFragment_to_articleFragment
             )
         }
     }

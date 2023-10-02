@@ -39,6 +39,8 @@ class NewViewModel(
     private val _newsSaveState : MutableLiveData<Boolean> = MutableLiveData()
     val newsSaveState : LiveData<Boolean> = _newsSaveState
 
+    var currentArticle : Article? = null
+
     init {
         getBreakingNews("us")
 //        registerNetworkStateCallback()

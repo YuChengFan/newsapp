@@ -22,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class ArticleFragment: Fragment(R.layout.fragment_search_news) {
     private val viewModel: NewViewModel by sharedViewModel()
     lateinit var binding: FragmentArticleBinding
-    val args: ArticleFragmentArgs by navArgs()
+//    val args: ArticleFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,21 +35,25 @@ class ArticleFragment: Fragment(R.layout.fragment_search_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val article = args.article
-        binding.webView.apply {
-            webViewClient = object : WebViewClient(){
-                override fun shouldOverrideUrlLoading(
-                    view: WebView?,
-                    request: WebResourceRequest?
-                ): Boolean {
-                    return false
-                }
-            }
-            loadUrl(article.url)
-        }
+//        val article = args.article
+        val article = viewModel.currentArticle
 
-        binding.fab.setOnClickListener {
-            viewModel.saveArticle(article)
+        article?.let {article->
+            binding.webView.apply {
+                webViewClient = object : WebViewClient(){
+                    override fun shouldOverrideUrlLoading(
+                        view: WebView?,
+                        request: WebResourceRequest?
+                    ): Boolean {
+                        return false
+                    }
+                }
+                loadUrl(article.url)
+            }
+
+            binding.fab.setOnClickListener {
+                viewModel.saveArticle(article)
+            }
         }
 
         viewModel.newsSaveState.observe(viewLifecycleOwner, Observer {
