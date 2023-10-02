@@ -92,7 +92,7 @@ jobs:
         run: ./gradlew wrapper --gradle-version=7.5
         
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew clean && ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
