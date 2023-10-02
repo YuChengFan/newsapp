@@ -20,9 +20,5 @@ class NewsActivity() : BaseBindingActivity<ActivityNewsBinding>() {
         super.onCreate(savedInstanceState)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsHostFragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
-
-        val handler = CoroutineExceptionHandler{_, throwable->
-            Log.d("hunter_test","caught exception: $throwable")
-        }
     }
 }
