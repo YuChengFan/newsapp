@@ -24,7 +24,7 @@ jobs:
 
 
   unit-test:
-#    needs: [lint]
+    needs: [lint]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -71,7 +71,7 @@ jobs:
           java-version: 11
 
       - name: SonarCloud Scan
-        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew app:sonarqube -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.analysis.mode=preview
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #
