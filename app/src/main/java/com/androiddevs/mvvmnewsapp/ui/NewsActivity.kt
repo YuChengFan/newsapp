@@ -18,7 +18,9 @@ class NewsActivity : BaseBindingActivity<ActivityNewsBinding>() {
     override val bindingInflater: (LayoutInflater) -> ActivityNewsBinding = ActivityNewsBinding::inflate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("hunter_test","add diff")
+        Log.d("hunter_test","add diff 2")
+        Log.d("hunter_test","add diff 2")
+        Log.d("hunter_test","add diff 2")
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsHostFragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
     }
