@@ -11,13 +11,14 @@ import com.androiddevs.mvvmnewsapp.databinding.ActivityNewsBinding
 import kotlinx.coroutines.CoroutineExceptionHandler
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class NewsActivity() : BaseBindingActivity<ActivityNewsBinding>() {
+class NewsActivity : BaseBindingActivity<ActivityNewsBinding>() {
 
     val viewModel: NewViewModel? by viewModel()
 
     override val bindingInflater: (LayoutInflater) -> ActivityNewsBinding = ActivityNewsBinding::inflate
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("hunter_test","add diff")
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.newsHostFragment) as NavHostFragment
         binding.bottomNavigationView.setupWithNavController(navHostFragment.findNavController())
     }
