@@ -9,6 +9,8 @@ import org.koin.core.context.startKoin
 class NewsAppApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        ///testststwr
         startKoin {
             androidContext(this@NewsAppApplication)
             modules(appModule)
